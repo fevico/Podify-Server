@@ -1,0 +1,1 @@
+export type pageinationQuery = {pageNo: string; limit: string }
