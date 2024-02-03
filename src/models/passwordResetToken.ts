@@ -9,7 +9,7 @@ interface PasswordResetTokenDocument {
 }
 
 interface Methods{
-    compareToken(token: string): Promise<boolean>   
+    compareToken(token: string): Promise<boolean>;  
 }
 
 // expire token after 1 hour
@@ -30,14 +30,15 @@ const passwordResetTokenSchema = new Schema<PasswordResetTokenDocument, {}, Meth
         }
     });
 
-    passwordResetTokenSchema.pre('save', async function(next){
+    passwordResetTokenSchema.pre("save", async function (next) {
         // hash the token
-        if(this.isModified("token")){
-            this.token = await hash(this.token, 10);
+        if (this.isModified("token")) {
+          this.token = await hash(this.token, 10);
         }
+      
         next();
-    }); 
-
+      });
+      
     passwordResetTokenSchema.methods.compareToken = async function(token){ 
      const result = await compare(token, this.token)
      return result
